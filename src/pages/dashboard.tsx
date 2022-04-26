@@ -17,10 +17,10 @@ export default function Dashboard() {
 }
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
-  // const apiClient = setupAPIClient(ctx); //aqui coloca-se o contexto porque é o contexto do lado do servidor
+  const apiClient = setupAPIClient(ctx); //aqui coloca-se o contexto porque é o contexto do lado do servidor
 
-  // const response = await apiClient.get("/me");
+  const response = await apiClient.get("/me");
 
-  // console.log(response);
+  console.log(response);
   return { props: {} }; //caso não tenha o cookie, não é pra fazer nada
 });
