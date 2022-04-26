@@ -20,5 +20,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
           permanent: false,
         },
       };
+
+    return await fn();
   };
 }
