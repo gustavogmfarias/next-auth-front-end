@@ -1,5 +1,9 @@
-import { FormEvent, useContext, useState } from "react";
+import { GetServerSideProps } from "next";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { parseCookies } from "nookies";
+
 import { AuthContext } from "../../contexts/AuthContext";
+import { withSSRGuest } from "../../utils/withSSRGuest";
 // import styles from "../../styles/Home.modules.css";
 
 export default function Home() {
@@ -7,6 +11,8 @@ export default function Home() {
   const [password, setPassword] = useState("");
 
   const { signIn } = useContext(AuthContext);
+
+  useEffect(() => {});
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -36,3 +42,7 @@ export default function Home() {
     </form>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return { props: {} }; //caso não tenha o cookie, não é pra fazer nada
+});
