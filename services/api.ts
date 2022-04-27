@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { Router } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { signOut } from "../contexts/AuthContext";
+import { AuthTokenError } from "./errors/AuthTokenError";
 
 let isRefreshing = false;
 let failedRequestQueue = [];
@@ -10,7 +11,7 @@ export function setupAPIClient(ctx = undefined) {
   let cookies = parseCookies(ctx);
 
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: "http://localhost:8080",
     headers: {
       Authorization: `Bearer ${cookies["nextauth.token"]}`,
     },
@@ -84,6 +85,8 @@ export function setupAPIClient(ctx = undefined) {
         } else {
           if (typeof window !== "undefined") {
             signOut();
+          } else {
+            return Promise.reject(new AuthTokenError());
           }
         }
       }
